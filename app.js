@@ -5,7 +5,7 @@ const { engine } = require("express-handlebars");
 const hbs = require("handlebars");
 const db = require('./configs/db');
 const session = require('express-session');
-const PgSession = require('connect-pg-simple')(session);
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 
 const app = express();
@@ -23,9 +23,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Express session
 app.use(session({
-    store: new PgSession({
-        conString: process.env.POSTGRES_URL_NO_SSL,
-    }),
+    store: MongoStore.create({
+        mongoUrl: process.env.SESSION_STORE_URI, // Ensure this is correctly set
+        ttl: 14 * 24 * 60 * 60, // 14 days
+        autoRemove: 'native'}),
     secret: 'penguynSecret',
     resave: false,
     saveUninitialized: true,
