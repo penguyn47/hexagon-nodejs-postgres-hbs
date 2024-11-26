@@ -17,7 +17,14 @@ const sequelize = new Sequelize(
             min: 0,                         // Số lượng kết nối tối thiểu
             acquire: 30000,                 // Thời gian tối đa (ms) để kết nối
             idle: 10000                     // Thời gian tối đa (ms) kết nối không sử dụng sẽ bị đóng
-        }
+        },
+        dialectOptions: {
+            ssl: {
+              require: true,
+              rejectUnauthorized: false // Đặt `false` nếu chứng chỉ không được xác thực
+            }
+          }
+      
     }
 );
 
