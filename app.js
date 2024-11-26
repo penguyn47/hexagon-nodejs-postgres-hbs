@@ -1,3 +1,4 @@
+require('pg');
 const express = require('express');
 const path = require('path');
 const { engine } = require("express-handlebars");
@@ -5,8 +6,6 @@ const hbs = require("handlebars");
 const db = require('./configs/db');
 const session = require('express-session');
 const passport = require('passport');
-
-const { ensureAuthenticated } = require('./configs/auth');
 
 const app = express();
 
