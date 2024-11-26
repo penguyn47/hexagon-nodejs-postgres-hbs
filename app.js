@@ -5,6 +5,7 @@ const { engine } = require("express-handlebars");
 const hbs = require("handlebars");
 const db = require('./configs/db');
 const session = require('express-session');
+const PgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
 
 const app = express();
@@ -22,6 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Express session
 app.use(session({
+    store: new PgSession({
+        conString: process.env.POSTGRES_URL_NO_SSL,
+    }),
     secret: 'penguynSecret',
     resave: false,
     saveUninitialized: true,
